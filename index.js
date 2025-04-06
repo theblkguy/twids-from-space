@@ -1,28 +1,37 @@
 
 $(document).ready(() => {
   const $body = $('body');
-  $body.html('');
+  const $div = $('<div>') // creates tag
+  
+  $body.html(''); // clears body
+  $body.prepend($div)
 
+  const $msgBtn = $('<button>').text('Listen for incoming transmissions')
 
-  const $tweets = streams.home.map((tweet) => {
-    const $tweet = $('<p></p>');
-    // username needs it's own tag
-    const twid = `${tweet.message}`
-    const user = `@${tweet.user}`;
-    //  needs to change to clickable element
-    $tweet.text(`${user} screams out into the endless void... ${twid}`);
+  $body.prepend($msgBtn)
 
-    return $tweet;
-  });
-    // create a function that creates new tweets
-  // Create a button 'Listen for new transmissions'
-  const $msgBtn = document.createElement('button');
-  $body.append($msgBtn)
-  $msgBtn.innerText = "Listen for new transmission"
-  $("button").click(function(){
-    
+  let generateTweets = ()=> {
+    let $tweets = streams.home.map((tweet) => {
+      const twid = `${tweet.message}`
+      
+      //  needs to change to clickable element
+      // username needs it's own tag
+      const $user = $('<a></a>')
+      .text(`@${tweet.user}`)
+      .attr('href', '#')
+      .addClass('username')
+      
+      const $tweet = $('<p></p>');
+
+      $div.prepend($tweet.text(`${user} ${twid} ${moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a')}`))
+    });
+  }
+
+  // create a function that creates new tweets
+  $msgBtn.click(function(){
+    $div.html('')
+    generateTweets()
   })
 
-  $body.append($tweets);
-
 });
+
