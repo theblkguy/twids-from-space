@@ -10,25 +10,31 @@ $(document).ready(() => {
 
     // Map over streams.home to generate tweets
     currentUser.map((tweet) => {
-      const $tweet = $('<p></p>'); // Create a paragraph element for each tweet
 
-      // Create a clickable username element
-      const $userName = $('<a></a>')
-        .text(`@${tweet.user}`) // Set the username text
-        .addClass('username') // Add class
-        .click(function(e) {
-          $body.html('')
-          generateTweets(`${tweet.user}`)
-        })
+      const tweets = currentUser ? streams.users[currentUser] : streams.home;
+      $tweetContainer.html('')
 
 
-      //the tweet message
-      const $twid = `${tweet.message}`;
+      tweets.forEach((tweet) => {
+        const $tweet = $('<p></p>'); // Create a paragraph element for each tweet
+  
+        // Create a clickable username element
+        const $userName = $('<a></a>')
+          .text(`@${tweet.user}`) // Set the username text
+          .addClass('username') // Add class
+          .click(function(e) {
+            $body.html('')
+            generateTweets(tweet.user);
+          })
+          
+          $tweet.append($userName) // Add the username
+                .append(`:  ${tweet.message}`) // Add the message
+                .append($('<span></span>').text(moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a'))); // Add the timestamp
+      })
+
+
 
       // Append all elements to the tweet (username, message, and timestamp)
-      $tweet.append($userName) // Add the username
-            .append(`: ${$twid} `) // Add the message
-            .append($('<span></span>').text(moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a'))); // Add the timestamp
 
       // Prepend the tweet to the container
       $tweetHolder.prepend($tweet);
@@ -37,11 +43,10 @@ $(document).ready(() => {
 
   // Listen for button clicks to generate new tweets
   $msgBtn.click(function () {
-    $tweetHolder.html(''); // Clear previous tweets
     generateTweets(); // Generate new tweets
   });
 
-
+generateTweets();
 
 
 
