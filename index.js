@@ -27,7 +27,8 @@ $(document).ready(() => {
     streams.users[`${visitingUser}`] = [];
     var composedTweet = $('#visitorTweet').val();
     writeTweet(composedTweet);
-
+    $tweetContainer.html(''); // Clear previous tweets
+    generateTweets(); // Generate new tweets
   });
 
     $tweeterDiv.prepend($tweetBox);
@@ -49,7 +50,6 @@ $(document).ready(() => {
     // Map over streams.home to generate tweets
     tweetStream.map((tweet) => {
       const $tweet = $('<p></p>'); // Create a paragraph element for each tweet
-
       // Create a clickable username element
       const $userName = $('<a></a>')
       .text(`@${tweet.user}`) // Set the username text
