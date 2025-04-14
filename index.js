@@ -66,7 +66,7 @@
       $tweet.append($userName) // Add the username
       .append(`: ${$twid} `) // Add the message
       .append($('<span></span>').text(moment(tweet.created_at).startOf('minute').fromNow())) // Add the timestamp
-      .append($('<span></span>').text(moment().format(' MMMM Do YYYY, h:mm:ss a')));
+      .append($('<span></span>').text(moment(tweet.created_at).format(' MMMM Do YYYY, h:mm:ss a')));
       // Prepend the tweet to the container
       $tweetContainer.prepend($tweet);
     });
