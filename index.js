@@ -1,4 +1,4 @@
-$(document).ready(() => {
+ $(document).ready(() => {
   const $body = $('body');
   $body.html(''); // Clear the body
 
@@ -65,8 +65,8 @@ $(document).ready(() => {
       // Append all elements to the tweet (username, message, and timestamp)
       $tweet.append($userName) // Add the username
       .append(`: ${$twid} `) // Add the message
-      .append($('<span></span>').text(moment(tweet.created_at).startOf('hour').fromNow())); // Add the timestamp
-
+      .append($('<span></span>').text(moment(tweet.created_at).startOf('minute').fromNow())) // Add the timestamp
+      .append($('<span></span>').text(moment().format(' MMMM Do YYYY, h:mm:ss a')));
       // Prepend the tweet to the container
       $tweetContainer.prepend($tweet);
     });
